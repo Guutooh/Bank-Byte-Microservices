@@ -1,12 +1,12 @@
 package com.bytes.accounts.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer extends BaseEntity {
@@ -21,5 +21,7 @@ public class Customer extends BaseEntity {
     private String email;
 
     private String mobileNumber;
+
+
 
 }
