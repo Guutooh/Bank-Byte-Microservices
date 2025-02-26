@@ -21,7 +21,7 @@ public class AccountsController {
     private IAccountsService iAccountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
 
         iAccountsService.createAccount(customerDto);
 
@@ -59,7 +59,10 @@ public class AccountsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
+                                                                @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile " +
+                                                                        "number must be 10 digits")
+                                                                String mobileNumber) {
 
         boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
 
