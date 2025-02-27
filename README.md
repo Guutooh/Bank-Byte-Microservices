@@ -2,18 +2,18 @@
 
 
 
-### O curso aborda conceitos avançados de arquitetura de microservices e práticas modernas de desenvolvimento de software.
+### Abordagem avançados da arquitetura de microservices e práticas modernas de desenvolvimento de software.
 
 ### Objetivos
 
-- Compreender os fundamentos da arquitetura de microservices e suas vantagens sobre arquiteturas monolíticas e SOA.
-- Implementar microservices escaláveis e resilientes utilizando Java, SpringBoot e Spring Cloud.
-- Utilizar Docker para containerizar aplicações e simplificar o ambiente de desenvolvimento e implantação.
-- Orquestrar microservices em clusters Kubernetes para escalar e gerenciar aplicações de forma eficiente.
-- Implementar práticas de observabilidade, segurança e monitoramento em microservices usando ferramentas como Prometheus, Grafana e Helm.
-- Integrar serviços e garantir a resiliência de aplicações distribuídas usando RabbitMQ, Kafka e padrões de mensageria.
-- Configurar e gerenciar a infraestrutura de nuvem usando Google Cloud Platform (GCP) e Kubernetes Engine.
-- Documentar APIs utilizando OpenAPI Specification e Swagger para facilitar a comunicação e colaboração entre equipes.
+- Melhor compreensão dos fundamentos da arquitetura de microservices.
+- Implementação de microservices escaláveis e resilientes utilizando Java, SpringBoot e Spring Cloud.
+- Utilização do Docker para containerizar aplicações e simplificar o ambiente de desenvolvimento e implantação.
+- Orquestração microservices em clusters Kubernetes para escalar e gerenciar aplicações de forma eficiente.
+- Implementação de práticas de observabilidade, segurança e monitoramento em microservices usando ferramentas como Prometheus, Grafana e Helm.
+- Integração serviços e garantir a resiliência de aplicações distribuídas usando RabbitMQ, Kafka e padrões de mensageria.
+- Configuraração e gerenciamento a infraestrutura de nuvem usando Google Cloud Platform (GCP) e Kubernetes Engine.
+- Documentação das APIs criadas utilizando OpenAPI Specification e Swagger para facilitar a comunicação e colaboração entre equipes.
 
 ## Ferramentas e Tecnologias Utilizadas
 
