@@ -1,0 +1,121 @@
+# === Diretórios de build e dependências ===
+/target/
+*/out/
+*.jar
+*.war
+*.ear
+*.class
+.build/
+
+# === Maven ===
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# === Gradle ===
+.gradle/
+build/
+!gradle-wrapper.jar
+.gradle-cache/
+gradle-app.setting
+.gradletasknamecache
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/aws.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/**/runConfigurations
+.idea/httpRequests
+.idea/caches/build_file_checksums.ser
+
+# === Eclipse / Spring Tool Suite (STS) ===
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders/
+.classpath
+.project
+.springBeans
+.sts4-cache/
+
+# === VS Code ===
+.vscode/
+
+# === Arquivos de logs e temporários ===
+logs/
+*.log
+*.tmp
+*.swp
+*.swo
+hs_err_pid*
+replay_pid*
+/test-output/
+jacoco/
+
+# === Arquivos de configuração sensíveis ===
+application-*.yml
+application-*.properties
+.env
+*.key
+*.pem
+*.p12
+*.crt
+*.der
+rebel.xml
+
+# === Banco de dados embutido e cache ===
+h2-console/
+*.db
+*.sqlite
+*.h2.db
+*.mv.db
+/.cache/
+
+# === Arquivos específicos do Docker ===
+docker-compose.override.yml
+**/docker/
+**/Dockerfile
+**/docker-compose.yml
+
+# === Arquivos do Kubernetes ===
+k8s/
+
+# === Arquivos de Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# === Arquivos de CI/CD (GitHub Actions, Jenkins, etc.) ===
+.github/workflows/*.log
+/jenkins_home/
+
+# === Outros arquivos específicos ===
+/.idea/
+.lombok-cache/
+node_modules/
