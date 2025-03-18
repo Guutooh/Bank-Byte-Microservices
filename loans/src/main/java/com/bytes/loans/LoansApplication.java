@@ -16,8 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableConfigurationProperties(value = {LoansContactInfoDto.class})
 @OpenAPIDefinition(
         info = @Info(
-                title = "Accounts microservice REST API Documentation",
-                description = "Bytes Accounts microsservice REST API Documentation",
+                title = "Loans microservice REST API Documentation",
+                description = "Bytes Loans microsservice REST API Documentation",
                 version = "v1",
                 contact = @Contact(
                         name = "Gustavo",
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
                         url = "https://www.linkedin.com/in/gustavo-oliveira-santos/")
         ),
         externalDocs = @ExternalDocumentation(
-                description = "Bytes Accounts microsservice REST API Documentation",
+                description = "Bytes Loans microsservice REST API Documentation",
                 url = "https://github.com/Guutooh/Bank-Byte-Microservices"
         )
 )
