@@ -24,7 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "CRUD REST APIs for Cards in EazyBank",
+@Tag(name = "CRUD REST APIs for Cards in ByteBank",
         description = "CRUD REST APIs in Byte Bank to CREATE, UPDATE, FETCH AND DELETE card details")
 
 @RestController
@@ -44,7 +44,7 @@ public class CardsController {
 //    @Autowired
 //    private CardsContactInfoDto cardsContactInfoDto;
 
-    @Operation(summary = "Create Card REST API", description = "REST API to create new Card inside EazyBank")
+    @Operation(summary = "Create Card REST API", description = "REST API to create new Card inside ByteBank")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "HTTP Status CREATED"),
             @ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error",
