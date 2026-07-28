@@ -1,103 +1,190 @@
-# Microservices com SpringBoot, Docker, Kubernetes
+# EazyBank — Arquitetura de Microserviços com Spring Cloud
 
+Plataforma bancária baseada em microserviços, desenvolvida com Java 21, Spring Boot 4 e Spring Cloud. A arquitetura cobre o ciclo completo de uma aplicação distribuída em produção: configuração centralizada, descoberta de serviços, comunicação síncrona e assíncrona, segurança com OAuth2, resiliência, observabilidade e orquestração em Kubernetes.
 
+---
 
-### Abordagem avançados da arquitetura de microservices e práticas modernas de desenvolvimento de software.
+## O que o sistema faz
 
-### Objetivos
+Três serviços de domínio independentes — contas, empréstimos e cartões — sustentados por uma infraestrutura completa de microserviços. Cada serviço tem seu próprio banco, suas próprias regras e seu próprio ciclo de vida. A comunicação entre eles passa pelo gateway, a configuração vem de um servidor centralizado, os eventos trafegam via Kafka e tudo é monitorado por uma stack de observabilidade com Grafana.
 
-- Melhor compreensão dos fundamentos da arquitetura de microservices.
-- Implementação de microservices escaláveis e resilientes utilizando Java, SpringBoot e Spring Cloud.
-- Utilização do Docker para containerizar aplicações e simplificar o ambiente de desenvolvimento e implantação.
-- Orquestração microservices em clusters Kubernetes para escalar e gerenciar aplicações de forma eficiente.
-- Implementação de práticas de observabilidade, segurança e monitoramento em microservices usando ferramentas como Prometheus, Grafana e Helm.
-- Integração serviços e garantir a resiliência de aplicações distribuídas usando RabbitMQ, Kafka e padrões de mensageria.
-- Configuraração e gerenciamento a infraestrutura de nuvem usando Google Cloud Platform (GCP) e Kubernetes Engine.
-- Documentação das APIs criadas utilizando OpenAPI Specification e Swagger para facilitar a comunicação e colaboração entre equipes.
+---
 
-## Ferramentas e Tecnologias Utilizadas
+## Serviços
 
-- **Spring Boot**: Framework para criação de aplicações Java. [Spring Boot Website](https://spring.io/projects/spring-boot)
-- **Spring Cloud**: Conjunto de ferramentas para construção de sistemas distribuídos baseados em microservices. [Spring Cloud Website](https://spring.io/projects/spring-cloud)
-- **Docker**: Plataforma de containerização para criar, implantar e executar aplicações. [Docker Website](https://www.docker.com)
-- **Kubernetes**: Sistema open-source para automatizar a implantação, escala e operação de aplicações em contêineres. [Kubernetes Website](https://kubernetes.io)
-- **Prometheus**: Sistema de monitoramento e alerta de código aberto. [Prometheus Website](https://prometheus.io)
-- **Grafana**: Plataforma para análise e monitoramento de métricas. [Grafana Website](https://grafana.com)
-- **Helm**: Gerenciador de pacotes para Kubernetes. [Helm Website](https://helm.sh)
-- **Google Cloud Platform (GCP)**: Plataforma de computação em nuvem oferecida pelo Google. [GCP Website](https://cloud.google.com)
-- **RabbitMQ**: Plataforma de mensageria para comunicação assíncrona entre microservices. [RabbitMQ Website](https://www.rabbitmq.com)
-- **Kafka**: Plataforma de streaming distribuído. [Apache Kafka Website](https://kafka.apache.org)
-- **OpenAPI Specification**: Especificação para descrever APIs RESTful. [OpenAPI Website](https://www.openapis.org)
-- **Swagger**: Ferramenta para documentar APIs RESTful. [Swagger Website](https://swagger.io)
-- **Lucidchart**: Ferramenta de diagramação online. [Lucidchart Blog](https://www.lucidchart.com/blog/ddd-event-storming)
-- **Model Mapper**: Biblioteca para mapeamento de objetos Java. [Model Mapper Website](http://modelmapper.org)
-- **Map Struct**: Framework para mapeamento de objetos em tempo de compilação. [Map Struct Website](https://mapstruct.org)
-- **Spring Cloud Config**: Servidor de configuração distribuída para microservices. [Spring Cloud Config Website](https://spring.io/projects/spring-cloud-config)
-- **Spring Cloud Bus**: Implementação do Spring Cloud para comunicação entre microservices. [Spring Cloud Bus Website](https://spring.io/projects/spring-cloud-bus)
-- **Resilience4j**: Biblioteca para tolerância a falhas e resiliência em microservices. [Resilience4j Website](https://resilience4j.readme.io)
-- **Spring Cloud Gateway**: Gateway para roteamento e filtragem em microservices. [Spring Cloud Gateway Website](https://spring.io/projects/spring-cloud-gateway)
-- **Stripe Rate Limiter**: Padrão de limite de taxa de requisições. [Stripe Rate Limiter Blog](https://stripe.com/blog/rate-limiters)
-- **Apache Benchmark**: Ferramenta para benchmarking de servidores HTTP. [Apache Benchmark Website](https://httpd.apache.org)
-- **Grafana Loki**: Sistema de agregação de logs. [Grafana Loki Setup](https://grafana.com/docs/loki/latest/get-started/quick-start/)
-- **Micrometer**: Biblioteca para métricas em Java. [Micrometer Website](https://micrometer.io)
-- **OpenTelemetry**: Framework para instrumentação de código e coleta de dados de telemetria. [OpenTelemetry Website](https://opentelemetry.io)
-- **Keycloak**: Servidor de identidade e acesso. [Keycloak Website](https://www.keycloak.org)
-- **Docker Compose**: Ferramenta para definir e executar aplicações Docker multi-container. [Docker Compose Website](https://docs.docker.com/compose/)
-- **Buildpacks**: Conjunto de ferramentas para empacotar aplicações. [Buildpacks Website](https://buildpacks.io)
-- **Google Jib**: Ferramenta para construir imagens Docker para aplicações Java sem Dockerfile. [Google Jib Website](https://github.com/GoogleContainerTools/jib)
-- **Twelve-Factor Methodology**: Metodologia para construção de aplicações SaaS. [Twelve-Factor Methodology](https://12factor.net)
-- **Beyond the Twelve-Factor App**: Livro sobre práticas modernas de desenvolvimento de aplicações. [Beyond the Twelve-Factor App Book](https://www.oreilly.com/library/view/beyond-the-twelve-factor/9781492042631)
-- **Spring Cloud Kubernetes**: Integração do Spring Cloud com Kubernetes. [Spring Cloud Kubernetes Website](https://spring.io/projects/spring-cloud-kubernetes)
-- **Istio**: Plataforma de service mesh para controlar o tráfego entre serviços. [Istio Website](https://istio.io)
+**Domínio**
 
-## Estrutura do Projeto
+- `accounts` — gestão de clientes e contas bancárias; ponto de entrada principal, agrega dados de loans e cards via Feign
+- `loans` — controle de empréstimos
+- `cards` — gestão de cartões de crédito
+- `message` — processa eventos assíncronos via Kafka
 
-O projeto está estruturado da seguinte forma:
+**Infraestrutura**
 
-- **`/src`:** Contém o código fonte da aplicação, incluindo controllers, services, repositories, models, DTOs, etc.
-- **`/config`:** Configurações específicas da aplicação, como arquivos de propriedades e configurações do Spring.
-- **`/docs`:** Documentação adicional, incluindo especificações OpenAPI e arquivos Swagger.
-- **`/scripts`:** Scripts utilitários para automação de tarefas, como scripts de inicialização do Docker e Kubernetes.
+- `configserver` — centraliza todas as configurações por ambiente (default, qa, prod)
+- `eurekaserver` — registro e descoberta de serviços
+- `gatewayserver` — ponto de entrada único; roteamento, circuit breaker e autenticação OAuth2
 
-## Comandos do Kubernetes Utilizados
+---
 
-|     Comando Kubernetes       |     Descrição          |
-| ------------- | ------------- |
-| "kubectl apply -f filename" | Para criar um deployment/service/configmap com base em um arquivo YAML fornecido |
-| "kubectl get all" | Para obter todos os componentes dentro do seu cluster |
-| "kubectl get pods" | Para obter todos os detalhes dos pods dentro do seu cluster |
-| "kubectl get pod pod-id" | Para obter os detalhes de um pod específico pelo ID |
-| "kubectl describe pod pod-id" | Para obter mais detalhes de um pod específico pelo ID |
-| "kubectl delete pod pod-id" | Para excluir um pod específico do cluster |
-| "kubectl get services" | Para obter todos os detalhes dos serviços dentro do seu cluster |
-| "kubectl get service service-id" | Para obter os detalhes de um serviço específico pelo ID |
-| "kubectl describe service service-id" | Para obter mais detalhes de um serviço específico pelo ID |
-| "kubectl get nodes" | Para obter todos os detalhes dos nós dentro do seu cluster |
-| "kubectl get node node-id" | Para obter os detalhes de um nó específico |
-| "kubectl get replicasets" | Para obter todos os detalhes dos conjuntos de réplicas dentro do seu cluster |
-| "kubectl get replicaset replicaset-id" | Para obter os detalhes de um conjunto de réplicas específico |
-| "kubectl get deployments" | Para obter todos os detalhes dos deployments dentro do seu cluster |
-| "kubectl get deployment deployment-id" | Para obter os detalhes de um deployment específico |
-| "kubectl get configmaps" | Para obter todos os detalhes dos configmaps dentro do seu cluster |
-| "kubectl get configmap configmap-id" | Para obter os detalhes de um configmap específico |
-| "kubectl get events --sort-by=.metadata.creationTimestamp" | Para obter todos os eventos ocorridos dentro do seu cluster, ordenados por data de criação |
-| "kubectl scale deployment accounts-deployment --replicas=1" | Para definir o número de réplicas para um deployment dentro do seu cluster |
-| "kubectl set image deployment gatewayserver-deployment gatewayserver=eazybytes/gatewayserver:s11 --record" | Para definir uma nova imagem para um deployment dentro do seu cluster |
-| "kubectl rollout history deployment gatewayserver-deployment" | Para ver o histórico de rollout de um deployment dentro do seu cluster |
-| "kubectl rollout undo deployment gatewayserver-deployment --to-revision=1" | Para reverter para uma revisão anterior de um deployment dentro do seu cluster |
-| "kubectl get pvc" | Para listar os PersistentVolumeClaims (PVCs) dentro do seu cluster |
-| "kubectl delete pvc data-happy-panda-mariadb-0" | Para excluir um PVC específico dentro do seu cluster |
+## Tecnologias
 
-## Comandos do Helm Utilizados
+**Back-end**
 
-|     Comando Helm       |     Descrição          |
-| ------------- | ------------- |
-| "helm create [NAME]" | Cria um chart padrão com o nome fornecido |
-| "helm dependencies build" | Para reconstruir o chart do Helm fornecido |
-| "helm install [NAME] [CHART]" | Instala o chart do Helm fornecido no cluster Kubernetes |
-| "helm upgrade [NAME] [CHART]" | Atualiza uma versão específica de um release para uma nova versão de um chart |
-| "helm history [NAME]" | Exibe as revisões históricas para um release específico |
-| "helm rollback [NAME] [REVISION]" | Faz rollback de um release para uma revisão anterior |
-| "helm uninstall [NAME]" | Desinstala todos os recursos associados a um release específico |
-| "helm template [NAME] [CHART]" | Renderiza localmente os templates do chart junto com os valores |
-| "helm list" | Lista todos os releases do Helm dentro de um cluster Kubernetes |
+- Java 21 + Spring Boot 4
+- Spring Cloud Config — configuração externalizada por ambiente
+- Spring Cloud Netflix Eureka — service discovery
+- Spring Cloud Gateway — roteamento dinâmico, rate limiting com Redis, circuit breaker
+- OpenFeign — comunicação declarativa entre serviços
+- Resilience4j — circuit breaker, retry e rate limiter
+- Spring Cloud Stream + Apache Kafka — mensageria assíncrona entre serviços
+- Spring Security + OAuth2 Resource Server — segurança via Keycloak
+- MapStruct — mapeamento de objetos em tempo de compilação
+- JPA/Hibernate + H2 — persistência
+
+**Observabilidade**
+
+- OpenTelemetry — instrumentação e propagação de traces
+- Micrometer — coleta de métricas na camada da aplicação
+- Grafana Tempo — rastreamento distribuído
+- Grafana Loki — agregação de logs
+- Prometheus — métricas
+- Grafana — dashboards unificados
+- Grafana Alloy — agente de coleta
+
+**Infraestrutura e deploy**
+
+- Docker + Docker Compose — ambiente local completo
+- Kubernetes — deploy em cluster com manifestos YAML
+- Helm — charts para gerenciar o deploy no Kubernetes
+- Google Cloud Platform (GCP) + Google Kubernetes Engine — deploy em nuvem
+- Google Jib — build de imagens Docker sem Dockerfile
+- Buildpacks — empacotamento de aplicações
+- Maven BOM compartilhado (`eazy-bom`) para versionamento consistente entre serviços
+
+**Documentação**
+
+- OpenAPI Specification + Swagger — documentação das APIs REST
+
+---
+
+## Como rodar localmente
+
+Você vai precisar de Java 21+, Docker e Docker Compose instalados.
+
+**1. Sobe toda a infraestrutura com Docker Compose**
+
+```bash
+cd docker-compose/default
+docker-compose up -d
+```
+
+Os serviços sobem na ordem certa por dependência: Config Server → Eureka → serviços de domínio → Gateway.
+
+**2. Principais portas**
+
+| Serviço       | Porta |
+|---------------|-------|
+| Config Server | 8071  |
+| Eureka        | 8070  |
+| Gateway       | 8072  |
+| Accounts      | 8080  |
+| Loans         | 8090  |
+| Cards         | 9000  |
+| Keycloak      | 7080  |
+| Grafana       | 3000  |
+| Prometheus    | 9090  |
+
+**3. Para rodar os serviços localmente (sem Docker)**
+
+```bash
+cd <nome-do-servico>
+./mvnw spring-boot:run
+```
+
+O `application.yml` de cada serviço aponta para o Config Server em `localhost:8071` e para o Eureka em `localhost:8070`.
+
+---
+
+## Deploy no Kubernetes
+
+**Com manifestos YAML**
+
+```bash
+kubectl apply -f kubernetes/1_keycloak.yml
+kubectl apply -f kubernetes/2_configmaps.yaml
+kubectl apply -f kubernetes/3_configserver.yml
+kubectl apply -f kubernetes/4_eurekaserver.yml
+kubectl apply -f kubernetes/5_accounts.yml
+kubectl apply -f kubernetes/6_loans.yml
+kubectl apply -f kubernetes/7_cards.yml
+kubectl apply -f kubernetes/8_gateway.yml
+```
+
+**Com Helm**
+
+```bash
+cd helm/environments/dev-env
+helm dependency build
+helm install eazybank .
+```
+
+---
+
+## Principais comandos do Kubernetes
+
+| Comando | Descrição |
+|---------|-----------|
+| `kubectl apply -f filename` | Cria recursos a partir de um arquivo YAML |
+| `kubectl get all` | Lista todos os componentes do cluster |
+| `kubectl get pods` | Lista todos os pods |
+| `kubectl describe pod pod-id` | Detalhes de um pod específico |
+| `kubectl delete pod pod-id` | Remove um pod do cluster |
+| `kubectl get services` | Lista todos os serviços |
+| `kubectl get deployments` | Lista todos os deployments |
+| `kubectl get configmaps` | Lista todos os configmaps |
+| `kubectl scale deployment accounts-deployment --replicas=1` | Escala um deployment |
+| `kubectl set image deployment gatewayserver-deployment gatewayserver=eazybytes/gatewayserver:s11` | Atualiza a imagem de um deployment |
+| `kubectl rollout history deployment gatewayserver-deployment` | Histórico de rollout |
+| `kubectl rollout undo deployment gatewayserver-deployment --to-revision=1` | Reverte para uma revisão anterior |
+| `kubectl get events --sort-by=.metadata.creationTimestamp` | Lista eventos do cluster ordenados por data |
+| `kubectl get pvc` | Lista os PersistentVolumeClaims |
+
+---
+
+## Principais comandos do Helm
+
+| Comando | Descrição |
+|---------|-----------|
+| `helm create [NAME]` | Cria um chart padrão |
+| `helm dependencies build` | Reconstrói as dependências do chart |
+| `helm install [NAME] [CHART]` | Instala um chart no cluster |
+| `helm upgrade [NAME] [CHART]` | Atualiza um release existente |
+| `helm history [NAME]` | Exibe o histórico de revisões de um release |
+| `helm rollback [NAME] [REVISION]` | Faz rollback para uma revisão anterior |
+| `helm uninstall [NAME]` | Remove todos os recursos de um release |
+| `helm template [NAME] [CHART]` | Renderiza os templates localmente |
+| `helm list` | Lista todos os releases no cluster |
+
+---
+
+## Estrutura de cada serviço
+
+```
+src/main/java/com/eazybytes/<servico>/
+├── controller/     → endpoints REST
+├── service/        → regras de negócio e clientes Feign
+├── entity/         → entidades JPA
+├── dto/            → objetos de transferência
+├── repository/     → interfaces JPA
+├── exception/      → tratamento centralizado de erros
+└── functions/      → funções para integração com Kafka (Spring Cloud Stream)
+```
+
+---
+
+## Referência
+
+Projeto desenvolvido seguindo o curso: https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/
+
+O foco foi entender na prática como construir e operar uma arquitetura de microserviços completa — do primeiro serviço isolado até um ambiente com observabilidade, segurança e deploy orquestrado em Kubernetes.
